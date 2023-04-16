@@ -13,13 +13,6 @@ git clone https://github.com/wspooong/facebook-group-scraper.git
 pip install -r requirements.txt
 ```
 
-## Running the tests
-
-```bash
-pip install pytest== 7.2.2
-pytest
-```
-
 ## Usage
 
 Here is an example of how to use this package:
@@ -62,7 +55,7 @@ In the above code, `group_url` is the ID of the Facebook group you want to scrap
 To run the tests, first install the necessary dependencies:
 
 ```
-pip install pytest responses
+pip install pytest== 7.2.2 responses
 ```
 
 Then, run the tests:
