@@ -48,6 +48,7 @@ class GroupScraper:
     ):
         """Initialize the GroupScraper class."""
         self.group_url = self._check_group_url(group_url)
+        self.group_id = None
         self.fetch_comment = fetch_comment
         self.fetch_reply = fetch_reply
         self.page_cursor = page_cursor
@@ -60,10 +61,30 @@ class GroupScraper:
         return f"Facebook Group Scraper: {self.group_url}"
 
     def start(self) -> dict:
-        """Yield a parsed post."""
+        """Yield a parsed post.
+
+        Returns:
+            dict: A parsed post.
+
+        Raises:
+            ValueError: If the group URL is invalid.
+        """
         logging.info(f"[SCRAPER: MAIN] Start scraping {self.group_url}.")
         post_generator = self._iter_page()
         for page in post_generator:
+            if not self.group_id:
+                if page.xpath('//meta[@property="al:android:url"]/@content'):
+                    self.group_id = extract_digits(
+                        page.xpath('//meta[@property="al:android:url"]/@content')[0]
+                    )
+                elif page.xpath('//meta[@property="al:ios:url"]/@content'):
+                    self.group_id = extract_digits(
+                        page.xpath('//meta[@property="al:ios:url"]/@content')[0]
+                    )
+                else:
+                    raise ValueError(
+                        "Unable to extract group ID. Please provide a valid Facebook group URL or group ID."
+                    )
             post_list = page.xpath(
                 '//div[@id="m_group_stories_container"]/section/article'
             )
@@ -137,12 +158,9 @@ class GroupScraper:
             logging.critical(
                 "[SCRAPER: POST] raw_json will be stored in 'errors_new_type.jsonl'. "
             )
-            with open("errors_new_type.jsonl", "a+") as f:
-                f.write(json.dumps({"raw_json": raw_json}))
-                f.write("\n")
-            return
+            return {"raw_json": raw_json}
 
-        post_data["page_id"] = data_ft["page_id"]
+        post_data["group_id"] = self.group_id
         if data_ft.get("mf_story_key"):
             post_data["post_id"] = data_ft["mf_story_key"]
         elif data_ft.get("top_level_post_id"):
@@ -189,7 +207,7 @@ class GroupScraper:
         return {
             key: post_data.get(key, None)
             for key in [
-                "page_id",
+                "group_id",
                 "post_id",
                 "publish_time",
                 "author_id",
@@ -287,7 +305,7 @@ class GroupScraper:
                 logging.info(
                     f"[SCRAPER: COMMENTS] End fetch comments. Total Comments: {comments_count}"
                 )
-                return result
+                return
 
             logging.info(
                 f"[SCRAPER: COMMENTS] Fetch next page. Sleep {self.comment_sleep_secs} secs... Total Comments: {comments_count}"
