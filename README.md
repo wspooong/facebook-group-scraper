@@ -6,7 +6,7 @@ Written in Python 3.7. Not tested on other versions.
 
 ## Install
 
-Install this package by git clone.
+Use this Scraper by git clone.
 
 ```bash
 git clone https://github.com/wspooong/facebook-group-scraper.git
