@@ -55,7 +55,7 @@ In the above code, `group_url` is the ID of the Facebook group you want to scrap
 To run the tests, first install the necessary dependencies:
 
 ```
-pip install pytest== 7.2.2 responses
+pip install pytest==7.2.2 responses
 ```
 
 Then, run the tests:
