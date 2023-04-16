@@ -116,7 +116,7 @@ def test_group_scraper():
     )
     for post in scraper.start():
         assert post["post_id"] == "6681059068579076"
-        assert post["page_id"] == "1260448967306807"
+        assert post["group_id"] == "1260448967306807"
         assert post["publish_time"] == 1681521458
         assert post["author_id"] == "100033148069290"
         assert post["author_name"] == "Wen Wen"
