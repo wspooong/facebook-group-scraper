@@ -59,7 +59,7 @@ In the above code, `group_url` is the ID of the Facebook group you want to scrap
 
 ## Testing
 
-This package comes with tests to ensure that it is working properly. To run the tests, first install the necessary dependencies:
+To run the tests, first install the necessary dependencies:
 
 ```
 pip install pytest responses
@@ -73,7 +73,7 @@ pytest
 
 ## Contributing
 
-If you find any bugs or have any suggestions for this package, feel free to open an issue or a pull request on the [GitHub repository](https://github.com/wspooong/facebook-group-scraper).
+If you find any bugs or have any suggestions for this package, feel free to open an issue or a pull request on the [GitHub repository](https://github.com/wspooong/facebook-group-scraper/pulls).
 
 ## Authors
 
