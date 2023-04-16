@@ -25,7 +25,11 @@ pytest
 Here is an example of how to use this package:
 
 ```python
-from facebook_group_scraper import GroupScraper
+from src.facebook_group_scraper import GroupScraper
+import json
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 scraper = GroupScraper(
     group_url="1260448967306807",
@@ -39,6 +43,9 @@ scraper = GroupScraper(
 
 for post in scraper.start():
     # Do something with the post
+    with open("test.jsonl", "a+") as f:
+        _ = f.write(json.dumps(post))
+        _ = f.write("\n")
 
 ```
 
