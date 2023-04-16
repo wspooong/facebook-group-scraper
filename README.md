@@ -37,7 +37,7 @@ scraper = GroupScraper(
 for post in scraper.start():
     # Do something with the post
     with open("test.jsonl", "a+") as f:
-        _ = f.write(json.dumps(post))
+        _ = f.write(json.dumps(post, ensure_ascii=False))
         _ = f.write("\n")
 
 ```
