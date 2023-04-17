@@ -70,8 +70,8 @@ class GroupScraper:
             ValueError: If the group URL is invalid.
         """
         logging.info(f"[SCRAPER: MAIN] Start scraping {self.group_url}.")
-        post_generator = self._iter_page()
-        for page in post_generator:
+        page_generator = self._iter_page()
+        for page in page_generator:
             if not self.group_id:
                 if page.xpath('//meta[@property="al:android:url"]/@content'):
                     self.group_id = extract_digits(
